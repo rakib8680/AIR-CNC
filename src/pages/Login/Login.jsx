@@ -28,6 +28,28 @@ const Login = () => {
                 setLoading(false)
                 toast.error(err.message)
             })
+    };
+
+
+    // handle sign in 
+    const handleSubmit = e => {
+        e.preventDefault()
+
+        const form = e.target
+        const email = form.email.value
+        const password = form.password.value
+
+        signIn(email, password)
+            .then(() => {
+                toast.success('sign in successful')
+                navigate('/')
+            })
+            .catch(err => {
+                setLoading(false)
+                toast.error(err.message)
+            })
+
+
     }
 
     return (
@@ -39,7 +61,7 @@ const Login = () => {
                         Sign in to access your account
                     </p>
                 </div>
-                <form
+                <form onSubmit={handleSubmit}
                     noValidate=''
                     action=''
                     className='space-y-6 ng-untouched ng-pristine ng-valid'
