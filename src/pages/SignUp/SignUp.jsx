@@ -32,13 +32,39 @@ const SignUp = () => {
         const image = form.image.files[0]
         const formData = new FormData()
         formData.append('image', image)
-        console.log(formData);
+        const url = `https://api.imgbb.com/1/upload?key=440e149d55a4ac192e42bd3f180b0898`
+        fetch(url, {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => response.json())
+            .then(data => {
+                const imageUrl = data.data.display_url
+                createUser(email, password)
+                    .then(() => {
+                        updateUserProfile(name, imageUrl)
+                            .then(() => {
+                                navigate(from, { replace: true })
+                            })
+                            .catch(err => {
+                                toast.error(err.message)
+                            })
+                        toast.success('User Created Successfully')
+                    })
+                    .catch(err => toast.error(err.message))
+            })
+            .catch(err => {
+                setLoading(false)
+                console.log(err.message)
+                toast.error(err.message)
+            })
+        // console.log(url);
     }
 
     // Handle google signIn
     const handleGoogleSignIn = () => {
         signInWithGoogle()
-            .then(result => {
+            .then(() => {
                 navigate(from, { replace: true })
             })
             .catch(err => {
