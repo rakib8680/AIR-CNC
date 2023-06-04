@@ -38,29 +38,40 @@ const MenuDropdown = () => {
                         >
                             Home
                         </Link>
-                        {user ? (
+                        {user ?
+                            <>
+                            <Link
+                                        to='/dashboard'
+                                        className='px-4 py-3 hover:bg-neutral-100 transition font-semibold'
+                                    >
+                                        Dashboard
+                                    </Link>
+                            
                             <div
                                 onClick={logOut}
                                 className='px-4 py-3 hover:bg-neutral-100 transition font-semibold cursor-pointer'
                             >
                                 Logout
                             </div>
-                        ) : (
-                            <>
-                                <Link
-                                    to='/login'
-                                    className='px-4 py-3 hover:bg-neutral-100 transition font-semibold'
-                                >
-                                    Login
-                                </Link>
-                                <Link
-                                    to='/signup'
-                                    className='px-4 py-3 hover:bg-neutral-100 transition font-semibold'
-                                >
-                                    Sign Up
-                                </Link>
+                        
                             </>
-                        )}
+                            :
+                            (
+                                <>
+                                    <Link
+                                        to='/login'
+                                        className='px-4 py-3 hover:bg-neutral-100 transition font-semibold'
+                                    >
+                                        Login
+                                    </Link>
+                                    <Link
+                                        to='/signup'
+                                        className='px-4 py-3 hover:bg-neutral-100 transition font-semibold'
+                                    >
+                                        Sign Up
+                                    </Link>
+                                </>
+                            )}
                     </div>
                 </div>
             )}

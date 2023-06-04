@@ -7,7 +7,7 @@ export const saveUser = user => {
     };
 
 
-    fetch(`http://localhost:5000/users/${user?.email}`, {
+    fetch(`${import.meta.env.VITE_API_BASE_URL}/users/${user?.email}`, {
         method: 'PUT',
         headers:
         {

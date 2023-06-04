@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
 import toast from 'react-hot-toast';
+import { addRoom } from '../../api/rooms';
 import { imageUpload } from '../../api/utils';
 import AddRoomForm from '../../components/Forms/AddRoomForm';
 import { AuthContext } from '../../providers/AuthProvider';
@@ -15,7 +16,6 @@ const AddRoom = () => {
         endDate: new Date(),
         key: 'selection'
     })
-
 
     // handle form submit 
     const handleSubmit = (e) => {
@@ -57,6 +57,13 @@ const AddRoom = () => {
                         email: user?.email
                     },
                 }
+
+                // post room data to database
+                addRoom(roomData)
+                .then(res =>{toast.success('Room added successfully')})
+                .catch(err=>toast.error(err.message))
+
+
                 console.log(roomData);
                 setLoading(false)
             })
