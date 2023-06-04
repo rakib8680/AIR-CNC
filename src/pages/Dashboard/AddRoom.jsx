@@ -9,7 +9,12 @@ import { AuthContext } from '../../providers/AuthProvider';
 const AddRoom = () => {
     const [loading, setLoading] = useState(false)
     const [uploadButtonText, setUploadButtonText] = useState('Upload Image');
-    const {user} = useContext(AuthContext);
+    const { user } = useContext(AuthContext);
+    const [dates, setDates] = useState({
+        startDate: new Date(),
+        endDate: new Date(),
+        key: 'selection'
+    })
 
 
     // handle form submit 
@@ -20,8 +25,8 @@ const AddRoom = () => {
 
         const form = e.target
         const title = form.title.value;
-        // const from = dates.startDate
-        // const to = dates.endDate
+        const from = dates.startDate
+        const to = dates.endDate
         const price = form.price.value;
         const total_guest = form.total_guest.value;
         const bedrooms = form.bedrooms.value;
@@ -34,11 +39,11 @@ const AddRoom = () => {
         // upload image 
         imageUpload(image)
             .then(data => {
-                const formData ={
-                    image : data.data.display_url,
+                const roomData = {
+                    image: data.data.display_url,
                     from,
                     to,
-                    price : parseFloat(price),
+                    price: parseFloat(price),
                     total_guest,
                     bedrooms,
                     bathrooms,
@@ -52,6 +57,7 @@ const AddRoom = () => {
                         email: user?.email
                     },
                 }
+                console.log(roomData);
                 setLoading(false)
             })
             .catch(err => {
@@ -67,12 +73,19 @@ const AddRoom = () => {
         setUploadButtonText(image.name.slice(0, 15));
     }
 
+    // calender select function 
+    const handleDates = ranges => {
+        setDates(ranges.selection)
+    }
+
 
     return <AddRoomForm
         handleSubmit={handleSubmit}
         loading={loading}
         handleImageChange={handleImageChange}
         uploadButtonText={uploadButtonText}
+        dates={dates}
+        handleDates={handleDates}
     />
 };
 
