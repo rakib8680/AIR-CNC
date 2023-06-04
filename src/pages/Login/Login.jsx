@@ -4,6 +4,7 @@ import { useContext, useRef } from 'react'
 import { AuthContext } from '../../providers/AuthProvider'
 import toast from 'react-hot-toast'
 import { TbFidgetSpinner } from 'react-icons/tb'
+import { saveUser } from '../../api/Auth'
 
 const Login = () => {
     const navigate = useNavigate()
@@ -16,13 +17,18 @@ const Login = () => {
         signInWithGoogle,
         resetPassword
     } = useContext(AuthContext)
-    
+
     const emailRef = useRef()
+
+
     // handle google sign in 
     const handleGoogleSignIn = () => {
         signInWithGoogle()
-            .then(() => {
+            .then((res) => {
                 toast.success('sign in successful')
+                // save user to db 
+                saveUser(res?.user)
+
                 navigate(from, { replace: true })
             })
             .catch(err => {
@@ -43,7 +49,7 @@ const Login = () => {
         signIn(email, password)
             .then(() => {
                 toast.success('sign in successful')
-                navigate(from, { replace: true })   
+                navigate(from, { replace: true })
             })
             .catch(err => {
                 setLoading(false)
