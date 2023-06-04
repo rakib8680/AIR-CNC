@@ -14,7 +14,7 @@ import { BsSnow } from 'react-icons/bs'
 import { IoDiamond } from 'react-icons/io5'
 import { MdOutlineVilla } from 'react-icons/md'
 
-const categories = [
+   const categories = [
   {
     label: 'Beach',
     icon: TbBeach,
