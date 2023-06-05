@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { useSearchParams } from 'react-router-dom';
+import { getAllRooms } from '../../api/rooms';
 import Heading from '../Heading/Heading';
 import Container from '../shared/Container';
 import Loader from '../shared/Loader';
@@ -15,8 +16,7 @@ const Rooms = () => {
     const [loading, setLoading] = useState(false)
     useEffect(() => {
         setLoading(true)
-        fetch('/rooms.json')
-            .then(res => res.json())
+        getAllRooms()
             .then(data => {
                 if (category) {
                     const filtered = data.filter(room => room.category === category)
@@ -46,9 +46,9 @@ const Rooms = () => {
                     :
                     <div className='pt-32'>
                         <Heading
-                        title='No Room Available in this category'
-                        subtitle='Please select other categories'
-                        center={true}
+                            title='No Room Available in this category'
+                            subtitle='Please select other categories'
+                            center={true}
                         >
 
                         </Heading>

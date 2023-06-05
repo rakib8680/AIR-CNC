@@ -1,4 +1,5 @@
 import { createBrowserRouter } from 'react-router-dom'
+import { getRoom } from '../api/rooms'
 import DashboardLayout from '../layouts/DashboardLayout'
 import Main from '../layouts/Main'
 import AddRoom from '../pages/Dashboard/AddRoom'
@@ -20,11 +21,12 @@ export const router = createBrowserRouter([
       {
         path: '/room/:id',
         element:
-          <PrivateRoute>
+          (<PrivateRoute>
             <RoomDetails />
-          </PrivateRoute>
-      }
-    ]
+          </PrivateRoute>),
+        loader: ({params})=> getRoom(params.id)
+      },
+    ],
   },
   {
     path: 'login',
